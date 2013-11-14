@@ -36,9 +36,8 @@ Quick start
 
 7. Open login page and click "Log in via oDesk" to verify everything works.
 
-.. note::
-   Keep ``ODESK_OAUTH_KEY`` and ``ODESK_OAUTH_SECRET`` settings in a file
-   that is not under version control.
+Important: keep ``ODESK_OAUTH_KEY`` and ``ODESK_OAUTH_SECRET`` settings in a file
+that is not under version control.
 
 See also example project in the repository.
 
