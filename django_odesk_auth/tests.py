@@ -59,7 +59,7 @@ class LoginCheckTestCase(TestCase):
     def test_inactive_user(self, client_getter):
         client = client_getter.return_value
         client.hr.get_user.return_value = {
-            'status': 'bad status',  # TODO(astrogov@odesk.com) possible values?
+            'status': 'bad status',
             'first_name': 'name',
             'last_name': 'surname',
             'uid': 'userid',

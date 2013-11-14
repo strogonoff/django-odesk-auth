@@ -1,15 +1,14 @@
 #coding: utf-8
 
 import logging
-
 from odesk import exceptions as odesk_exceptions
+
 from django.contrib.auth.models import User
 from django.conf import settings
 
 from . import utils
 
 
-# TODO ensure the logger is showing in gunicorn logs on backend
 logger = logging.getLogger(__name__)
 
 
