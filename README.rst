@@ -42,7 +42,13 @@ Provided you have installed ``django-odesk-auth`` and ``python-odesk==0.4.1``.
 Important: keep ``ODESK_OAUTH_KEY`` and ``ODESK_OAUTH_SECRET`` settings in a file
 that is not under version control.
 
-See also example project in the repository.
+
+Example project
+~~~~~~~~~~~~~~~
+
+Fill in some critical settings in ``example_project/settings.py`` (see comments),
+then run ``./manage.py syncdb``, then you can run development server and
+open ``localhost:8000``.
 
 
 Access control
