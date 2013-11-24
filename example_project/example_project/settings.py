@@ -104,12 +104,6 @@ SITE_ID = 1
 #     '<your_username>@odesk.com'
 # )
 
-ODESK_OAUTH_KEY = '8e7cc6872e54bfa8b2220f1386f37ff1'
-ODESK_OAUTH_SECRET = '8702f61f892b92e7'
-
-ODESK_AUTH_ALLOWED_USERS = (
-    'astrogov@odesk.com'
-)
 ODESK_AUTH_ALLOWED_TEAMS = ()
 ODESK_AUTH_ADMINS = ()
 ODESK_AUTH_ADMIN_TEAMS = ()
