@@ -11,8 +11,11 @@ Creating oDesk OAuth API key
 ----------------------------
 
 Go to https://www.odesk.com/services/api/apply.
-Authentication type should be set to "OAuth 1.0".
-Callback URL should be left blank.
+
+* Authentication type should be set to "OAuth 1.0".
+* Callback URL should be left blank.
+* Permission "View the structure of your companies/teams" is currently
+  required to be checked.
 
 
 Quick start
