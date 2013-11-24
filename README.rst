@@ -21,7 +21,7 @@ Go to https://www.odesk.com/services/api/apply.
 Quick start
 -----------
 
-Provided you have installed ``django-odesk-auth`` and ``python-odesk==0.4.1``.
+Provided you have installed ``django-odesk-auth`` and ``python-odesk==0.5``.
 
 1. Add ``django_odesk_auth`` to INSTALLED_APPS.
    Make sure you have ``django.contrib.sites`` app in INSTALLED_APPS as well.
@@ -48,6 +48,9 @@ that is not under version control.
 
 Example project
 ~~~~~~~~~~~~~~~
+
+Install ``django==1.6`` and ``python-odesk==0.5`` (better do this
+in virtual Python environment created specifically for example project).
 
 Fill in some critical settings in ``example_project/settings.py`` (see comments),
 then run ``./manage.py syncdb``, then you can run development server and
