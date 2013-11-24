@@ -18,7 +18,10 @@ Callback URL should be left blank.
 Quick start
 -----------
 
+Provided you have installed ``django-odesk-auth`` and ``python-odesk==0.4.1``.
+
 1. Add ``django_odesk_auth`` to INSTALLED_APPS.
+   Make sure you have ``django.contrib.sites`` app in INSTALLED_APPS as well.
 
 2. Add ``django_odesk_auth.backends.ODeskOAuthBackend``
    to AUTHENTICATION_BACKENDS.
