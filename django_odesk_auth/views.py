@@ -72,7 +72,13 @@ def oauth_login_callback(request):
     else:
         return http.HttpResponse("User not found", status=401)
 
-    return http.HttpResponseRedirect(request.GET.get('next', '/'))
+    redirect_url = request.GET.get('next', '/')
+
+    # oDesk apparently sets "next" in GET query to string None
+    if redirect_url == 'None':
+        redirect_url = '/'
+
+    return http.HttpResponseRedirect(redirect_url)
 
 
 def oauth_check_login(request):
