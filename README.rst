@@ -67,9 +67,8 @@ You **have** to explicitly specify at least who is allowed to log in to your sit
 (Yes, this means you can't grant access to everyone yet, unless you hack the app.)
 
 Users that aren't allowed to log in get ``User.is_active`` flag set to False.
-See ``utils.update_user_permissions()`` definition if you're interested in other specifics.
-
-More flexible access control will be on the list if this app gains traction.
+See ``utils.update_user_permissions()`` definition if you're interested in other specifics,
+and see available settings below.
 
 
 Making authenticated oDesk API calls
