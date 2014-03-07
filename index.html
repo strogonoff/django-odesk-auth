@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>django-odesk-auth by strogonoff</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>django-odesk-auth</h1>
+        <p>Django app for simple “Log in via oDesk” functionality. Authentication backend and a couple of views.</p>
+
+        <p class="view"><a href="https://github.com/strogonoff/django-odesk-auth">View the Project on GitHub <small>strogonoff/django-odesk-auth</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/strogonoff/django-odesk-auth/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/strogonoff/django-odesk-auth/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/strogonoff/django-odesk-auth">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="simple-odesk-login-for-your-django-based-project" class="anchor" href="#simple-odesk-login-for-your-django-based-project"><span class="octicon octicon-link"></span></a>Simple oDesk login for your Django-based project</h1>
+
+<h2>
+<a name="creating-odesk-oauth-api-key" class="anchor" href="#creating-odesk-oauth-api-key"><span class="octicon octicon-link"></span></a>Creating oDesk OAuth API key</h2>
+
+<p>Go to <a href="https://www.odesk.com/services/api/apply">https://www.odesk.com/services/api/apply</a>.</p>
+
+<ul>
+<li>Authentication type should be set to "OAuth 1.0".</li>
+<li>Callback URL should be left blank.</li>
+<li>Permission "View the structure of your companies/teams" is currently
+required to be checked.</li>
+</ul><h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick start</h2>
+
+<p>Provided you have installed <code>django-odesk-auth</code> and <code>python-odesk==0.5</code>.</p>
+
+<ol>
+<li><p>Add <code>django_odesk_auth</code> to INSTALLED_APPS.
+Make sure you have <code>django.contrib.sites</code> app in INSTALLED_APPS as well.</p></li>
+<li><p>Add <code>django_odesk_auth.backends.ODeskOAuthBackend</code>
+to AUTHENTICATION_BACKENDS.</p></li>
+<li><p>Specify <code>ODESK_OAUTH_KEY</code> and <code>ODESK_OAUTH_SECRET</code> settings
+with your key information.</p></li>
+<li><p>Add <a href="mailto:your_username@odesk.com">your_username@odesk.com</a> to <code>ODESK_AUTH_ALLOWED_USERS</code>,
+and set <code>ODESK_AUTH_CREATE_UNKNOWN_USER</code> to True.</p></li>
+<li><p>Include <code>django_odesk_auth.urls</code> in your URL patterns.</p></li>
+<li><p>In your login page template, put a link "Log in via oDesk" and point it
+to <code>{% url "odesk_oauth_login" %}</code>.</p></li>
+<li><p>Open login page and click "Log in via oDesk" to verify everything works.</p></li>
+</ol><p>Important: keep <code>ODESK_OAUTH_KEY</code> and <code>ODESK_OAUTH_SECRET</code> settings in a file
+that is not under version control.</p>
+
+<p>Example project</p>
+
+<pre><code>
+Install ``django==1.6`` and ``python-odesk==0.5`` (better do this
+in virtual Python environment created specifically for example project).
+
+Fill in some critical settings in ``example_project/settings.py`` (see comments),
+then run ``./manage.py syncdb``, then you can run development server and
+open ``localhost:8000``.
+
+
+Access control
+--------------
+
+Currently there's no way to turn off access control: you have to explicitly
+specify which teams or particular users are allowed to log in to your site.
+You can also specify which users are assigned staff and superuser status
+upon login.
+
+Users that aren't allowed to log in get ``User.is_active`` flag set to False.
+
+See ``utils.update_user_permissions()`` definition and list of settings below.
+
+
+Making API calls after authentication
+-------------------------------------
+
+After user is successfully authenticated, you can make API calls on their behalf.
+
+Here's a quick example::
+
+    from django_odesk_auth import utils, O_ACCESS_TOKEN
+    odesk_client = utils.get_client(request.session[O_ACCESS_TOKEN])
+    print odesk_client.hr.get_teams()
+    # Should output list of teams user has access to
+
+Some notes:
+
+* How you make API calls is up to you. Internally django-odesk-auth
+  uses python-odesk library, and so does this example.
+
+* ``utils.get_client()`` function returns an instance of ``odesk.Client``.
+  Handy if you're using python-odesk library to make API calls.
+
+* OAuth access token, obtained during authentication, is stored
+  under ``request.session[O_ACCESS_TOKEN]``.
+
+
+Checking OAuth access token
+---------------------------
+
+Sometimes there's a need to make sure that current user's authentication
+is still valid. You can use ``utils.check_login()`` in Python,
+or make an HTTP request to named URL ``'odesk_oauth_check_login'``
+from client side (see ``views.oauth_check_login``).
+
+
+Available settings
+------------------
+
+ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET
+  API key information.
+
+ODESK_AUTH_CREATE_UNKNOWN_USER = False
+  Whether to create a new account in Django if given user logs in via oDesk
+  for the first time.
+
+ODESK_AUTH_ALLOWED_USERS = ()
+  oDesk emails of users who are allowed to log in via oDesk.
+
+ODESK_AUTH_ADMINS = ()
+  oDesk emails of users who are marked as ``is_staff`` upon login.
+
+ODESK_AUTH_SUPERUSERS = ()
+  oDesk emails of users who are marked as ``is_superuser`` upon login.
+
+ODESK_AUTH_ALLOWED_TEAMS = ()
+  IDs of oDesk teams, members of which are allowed to access FIVS backend.
+
+ODESK_AUTH_ADMIN_TEAMS = ()
+  IDs of oDesk teams, members of which are marked as ``is_staff`` upon login.
+
+ODESK_AUTH_SUPERUSER_TEAMS = ()
+  IDs of oDesk teams, members of which are marked as ``is_superuser`` upon login.
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/strogonoff">strogonoff</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
