@@ -62,91 +62,85 @@ to <code>{% url "odesk_oauth_login" %}</code>.</p></li>
 </ol><p>Important: keep <code>ODESK_OAUTH_KEY</code> and <code>ODESK_OAUTH_SECRET</code> settings in a file
 that is not under version control.</p>
 
-<p>Example project</p>
+<h2>
+<a name="example-project" class="anchor" href="#example-project"><span class="octicon octicon-link"></span></a>Example project</h2>
 
-<pre><code>
-Install ``django==1.6`` and ``python-odesk==0.5`` (better do this
-in virtual Python environment created specifically for example project).
+<p>Install <code>django==1.6</code> and <code>python-odesk==0.5</code> (better do this
+in virtual Python environment created specifically for example project).</p>
 
-Fill in some critical settings in ``example_project/settings.py`` (see comments),
-then run ``./manage.py syncdb``, then you can run development server and
-open ``localhost:8000``.
+<p>Fill in some critical settings in <code>example_project/settings.py</code> (see comments),
+then run <code>./manage.py syncdb</code>, then you can run development server and
+open <code>localhost:8000</code>.</p>
 
+<h2>
+<a name="access-control" class="anchor" href="#access-control"><span class="octicon octicon-link"></span></a>Access control</h2>
 
-Access control
---------------
-
-Currently there's no way to turn off access control: you have to explicitly
+<p>Currently there's no way to turn off access control: you have to explicitly
 specify which teams or particular users are allowed to log in to your site.
 You can also specify which users are assigned staff and superuser status
-upon login.
+upon login.</p>
 
-Users that aren't allowed to log in get ``User.is_active`` flag set to False.
+<p>Users that aren't allowed to log in get <code>User.is_active</code> flag set to False.</p>
 
-See ``utils.update_user_permissions()`` definition and list of settings below.
+<p>See <code>utils.update_user_permissions()</code> definition and list of settings below.</p>
 
+<h2>
+<a name="making-api-calls-after-authentication" class="anchor" href="#making-api-calls-after-authentication"><span class="octicon octicon-link"></span></a>Making API calls after authentication</h2>
 
-Making API calls after authentication
--------------------------------------
+<p>After user is successfully authenticated, you can make API calls on their behalf.</p>
 
-After user is successfully authenticated, you can make API calls on their behalf.
+<p>Here's a quick example::</p>
 
-Here's a quick example::
-
-    from django_odesk_auth import utils, O_ACCESS_TOKEN
-    odesk_client = utils.get_client(request.session[O_ACCESS_TOKEN])
-    print odesk_client.hr.get_teams()
-    # Should output list of teams user has access to
-
-Some notes:
-
-* How you make API calls is up to you. Internally django-odesk-auth
-  uses python-odesk library, and so does this example.
-
-* ``utils.get_client()`` function returns an instance of ``odesk.Client``.
-  Handy if you're using python-odesk library to make API calls.
-
-* OAuth access token, obtained during authentication, is stored
-  under ``request.session[O_ACCESS_TOKEN]``.
-
-
-Checking OAuth access token
----------------------------
-
-Sometimes there's a need to make sure that current user's authentication
-is still valid. You can use ``utils.check_login()`` in Python,
-or make an HTTP request to named URL ``'odesk_oauth_check_login'``
-from client side (see ``views.oauth_check_login``).
-
-
-Available settings
-------------------
-
-ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET
-  API key information.
-
-ODESK_AUTH_CREATE_UNKNOWN_USER = False
-  Whether to create a new account in Django if given user logs in via oDesk
-  for the first time.
-
-ODESK_AUTH_ALLOWED_USERS = ()
-  oDesk emails of users who are allowed to log in via oDesk.
-
-ODESK_AUTH_ADMINS = ()
-  oDesk emails of users who are marked as ``is_staff`` upon login.
-
-ODESK_AUTH_SUPERUSERS = ()
-  oDesk emails of users who are marked as ``is_superuser`` upon login.
-
-ODESK_AUTH_ALLOWED_TEAMS = ()
-  IDs of oDesk teams, members of which are allowed to access FIVS backend.
-
-ODESK_AUTH_ADMIN_TEAMS = ()
-  IDs of oDesk teams, members of which are marked as ``is_staff`` upon login.
-
-ODESK_AUTH_SUPERUSER_TEAMS = ()
-  IDs of oDesk teams, members of which are marked as ``is_superuser`` upon login.
+<pre><code>from django_odesk_auth import utils, O_ACCESS_TOKEN
+odesk_client = utils.get_client(request.session[O_ACCESS_TOKEN])
+print odesk_client.hr.get_teams()
+# Should output list of teams user has access to
 </code></pre>
+
+<p>Some notes:</p>
+
+<ul>
+<li><p>How you make API calls is up to you. Internally django-odesk-auth
+uses python-odesk library, and so does this example.</p></li>
+<li><p><code>utils.get_client()</code> function returns an instance of <code>odesk.Client</code>.
+Handy if you're using python-odesk library to make API calls.</p></li>
+<li><p>OAuth access token, obtained during authentication, is stored
+under <code>request.session[O_ACCESS_TOKEN]</code>.</p></li>
+</ul><h2>
+<a name="checking-oauth-access-token" class="anchor" href="#checking-oauth-access-token"><span class="octicon octicon-link"></span></a>Checking OAuth access token</h2>
+
+<p>Sometimes there's a need to make sure that current user's authentication
+is still valid. You can use <code>utils.check_login()</code> in Python,
+or make an HTTP request to named URL <code>'odesk_oauth_check_login'</code>
+from client side (see <code>views.oauth_check_login</code>).</p>
+
+<h2>
+<a name="available-settings" class="anchor" href="#available-settings"><span class="octicon octicon-link"></span></a>Available settings</h2>
+
+<p>ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET
+  API key information.</p>
+
+<p>ODESK_AUTH_CREATE_UNKNOWN_USER = False
+  Whether to create a new account in Django if given user logs in via oDesk
+  for the first time.</p>
+
+<p>ODESK_AUTH_ALLOWED_USERS = ()
+  oDesk emails of users who are allowed to log in via oDesk.</p>
+
+<p>ODESK_AUTH_ADMINS = ()
+  oDesk emails of users who are marked as <code>is_staff</code> upon login.</p>
+
+<p>ODESK_AUTH_SUPERUSERS = ()
+  oDesk emails of users who are marked as <code>is_superuser</code> upon login.</p>
+
+<p>ODESK_AUTH_ALLOWED_TEAMS = ()
+  IDs of oDesk teams, members of which are allowed to access FIVS backend.</p>
+
+<p>ODESK_AUTH_ADMIN_TEAMS = ()
+  IDs of oDesk teams, members of which are marked as <code>is_staff</code> upon login.</p>
+
+<p>ODESK_AUTH_SUPERUSER_TEAMS = ()
+  IDs of oDesk teams, members of which are marked as <code>is_superuser</code> upon login.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/strogonoff">strogonoff</a></p>
@@ -154,6 +148,16 @@ ODESK_AUTH_SUPERUSER_TEAMS = ()
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-24538431-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
