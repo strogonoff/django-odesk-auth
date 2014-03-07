@@ -1,8 +1,5 @@
-django-odesk-auth
-=================
-
-Django app for simple “Log in via oDesk” functionality.
-Authentication backend and a couple of views.
+Simple oDesk login for your Django-based project
+================================================
 
 
 Creating oDesk OAuth API key
@@ -45,7 +42,7 @@ that is not under version control.
 
 
 Example project
-~~~~~~~~~~~~~~~
+--------------
 
 Install ``django==1.6`` and ``python-odesk==0.5`` (better do this
 in virtual Python environment created specifically for example project).
@@ -58,24 +55,30 @@ open ``localhost:8000``.
 Access control
 --------------
 
-Currently there's no way to turn off access control: you have to explicitly
-specify which teams or particular users are allowed to log in to your site.
-You can also specify which users are assigned staff and superuser status
-upon login.
+App has basic access control facilities.
+
+You can specify who is allowed to log in to your site and who upon login gets
+staff and/or superuser statuses. This is configured through Django settings.
+
+Currently access control cannot be turned off.
+You **have** to explicitly specify at least who is allowed to log in to your site.
+(Yes, this means you can't grant access to everyone yet, unless you hack the app.)
 
 Users that aren't allowed to log in get ``User.is_active`` flag set to False.
+See ``utils.update_user_permissions()`` definition if you're interested in other specifics.
 
-See ``utils.update_user_permissions()`` definition and list of settings below.
+More flexible access control will be on the list if this app gains traction.
 
 
-Making API calls after authentication
--------------------------------------
+Making authenticated oDesk API calls
+------------------------------------
 
-After user is successfully authenticated, you can make API calls on their behalf.
+After user is successfully authenticated, you can call oDesk API on their behalf.
 
 Here's a quick example::
 
     from django_odesk_auth import utils, O_ACCESS_TOKEN
+    
     odesk_client = utils.get_client(request.session[O_ACCESS_TOKEN])
     print odesk_client.hr.get_teams()
     # Should output list of teams user has access to
@@ -96,35 +99,37 @@ Checking OAuth access token
 ---------------------------
 
 Sometimes there's a need to make sure that current user's authentication
-is still valid. You can use ``utils.check_login()`` in Python,
-or make an HTTP request to named URL ``'odesk_oauth_check_login'``
-from client side (see ``views.oauth_check_login``).
+is still valid—that they, for example, didn't revoke access to their account.
+
+For that you can use ``utils.check_login()`` in Python, or make an AJAX request
+to named URL ``'odesk_oauth_check_login'`` from client side
+(see ``views.oauth_check_login``).
 
 
-Available settings
-------------------
+Available Django settings
+-------------------------
 
-ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET
+ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET  
   API key information.
 
-ODESK_AUTH_CREATE_UNKNOWN_USER = False
+ODESK_AUTH_CREATE_UNKNOWN_USER = False  
   Whether to create a new account in Django if given user logs in via oDesk
   for the first time.
 
-ODESK_AUTH_ALLOWED_USERS = ()
+ODESK_AUTH_ALLOWED_USERS = ()  
   oDesk emails of users who are allowed to log in via oDesk.
 
-ODESK_AUTH_ADMINS = ()
+ODESK_AUTH_ADMINS = ()  
   oDesk emails of users who are marked as ``is_staff`` upon login.
 
-ODESK_AUTH_SUPERUSERS = ()
+ODESK_AUTH_SUPERUSERS = ()  
   oDesk emails of users who are marked as ``is_superuser`` upon login.
 
-ODESK_AUTH_ALLOWED_TEAMS = ()
+ODESK_AUTH_ALLOWED_TEAMS = ()  
   IDs of oDesk teams, members of which are allowed to log in via oDesk.
 
-ODESK_AUTH_ADMIN_TEAMS = ()
+ODESK_AUTH_ADMIN_TEAMS = ()  
   IDs of oDesk teams, members of which are marked as ``is_staff`` upon login.
 
-ODESK_AUTH_SUPERUSER_TEAMS = ()
+ODESK_AUTH_SUPERUSER_TEAMS = ()  
   IDs of oDesk teams, members of which are marked as ``is_superuser`` upon login.
