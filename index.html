@@ -85,13 +85,14 @@ upon login.</p>
 <p>See <code>utils.update_user_permissions()</code> definition and list of settings below.</p>
 
 <h2>
-<a name="making-api-calls-after-authentication" class="anchor" href="#making-api-calls-after-authentication"><span class="octicon octicon-link"></span></a>Making API calls after authentication</h2>
+<a name="making-authenticated-odesk-api-calls" class="anchor" href="#making-authenticated-odesk-api-calls"><span class="octicon octicon-link"></span></a>Making authenticated oDesk API calls</h2>
 
-<p>After user is successfully authenticated, you can make API calls on their behalf.</p>
+<p>After user is successfully authenticated, you can call oDesk API on their behalf.</p>
 
 <p>Here's a quick example::</p>
 
 <pre><code>from django_odesk_auth import utils, O_ACCESS_TOKEN
+
 odesk_client = utils.get_client(request.session[O_ACCESS_TOKEN])
 print odesk_client.hr.get_teams()
 # Should output list of teams user has access to
@@ -111,35 +112,35 @@ under <code>request.session[O_ACCESS_TOKEN]</code>.</p></li>
 
 <p>Sometimes there's a need to make sure that current user's authentication
 is still valid. You can use <code>utils.check_login()</code> in Python,
-or make an HTTP request to named URL <code>'odesk_oauth_check_login'</code>
+or make an AJAX request to named URL <code>'odesk_oauth_check_login'</code>
 from client side (see <code>views.oauth_check_login</code>).</p>
 
 <h2>
-<a name="available-settings" class="anchor" href="#available-settings"><span class="octicon octicon-link"></span></a>Available settings</h2>
+<a name="available-django-settings" class="anchor" href="#available-django-settings"><span class="octicon octicon-link"></span></a>Available Django settings</h2>
 
-<p>ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET
+<p>ODESK_OAUTH_KEY, ODESK_OAUTH_SECRET<br>
   API key information.</p>
 
-<p>ODESK_AUTH_CREATE_UNKNOWN_USER = False
+<p>ODESK_AUTH_CREATE_UNKNOWN_USER = False<br>
   Whether to create a new account in Django if given user logs in via oDesk
   for the first time.</p>
 
-<p>ODESK_AUTH_ALLOWED_USERS = ()
+<p>ODESK_AUTH_ALLOWED_USERS = ()<br>
   oDesk emails of users who are allowed to log in via oDesk.</p>
 
-<p>ODESK_AUTH_ADMINS = ()
+<p>ODESK_AUTH_ADMINS = ()<br>
   oDesk emails of users who are marked as <code>is_staff</code> upon login.</p>
 
-<p>ODESK_AUTH_SUPERUSERS = ()
+<p>ODESK_AUTH_SUPERUSERS = ()<br>
   oDesk emails of users who are marked as <code>is_superuser</code> upon login.</p>
 
-<p>ODESK_AUTH_ALLOWED_TEAMS = ()
+<p>ODESK_AUTH_ALLOWED_TEAMS = ()<br>
   IDs of oDesk teams, members of which are allowed to access FIVS backend.</p>
 
-<p>ODESK_AUTH_ADMIN_TEAMS = ()
+<p>ODESK_AUTH_ADMIN_TEAMS = ()<br>
   IDs of oDesk teams, members of which are marked as <code>is_staff</code> upon login.</p>
 
-<p>ODESK_AUTH_SUPERUSER_TEAMS = ()
+<p>ODESK_AUTH_SUPERUSER_TEAMS = ()<br>
   IDs of oDesk teams, members of which are marked as <code>is_superuser</code> upon login.</p>
       </section>
       <footer>
