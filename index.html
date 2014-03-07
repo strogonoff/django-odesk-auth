@@ -31,6 +31,9 @@
         <h1>
 <a name="simple-odesk-login-for-your-django-based-project" class="anchor" href="#simple-odesk-login-for-your-django-based-project"><span class="octicon octicon-link"></span></a>Simple oDesk login for your Django-based project</h1>
 
+<pre><code>$ pip install django-odesk-auth
+</code></pre>
+
 <h2>
 <a name="creating-odesk-oauth-api-key" class="anchor" href="#creating-odesk-oauth-api-key"><span class="octicon octicon-link"></span></a>Creating oDesk OAuth API key</h2>
 
@@ -75,14 +78,18 @@ open <code>localhost:8000</code>.</p>
 <h2>
 <a name="access-control" class="anchor" href="#access-control"><span class="octicon octicon-link"></span></a>Access control</h2>
 
-<p>Currently there's no way to turn off access control: you have to explicitly
-specify which teams or particular users are allowed to log in to your site.
-You can also specify which users are assigned staff and superuser status
-upon login.</p>
+<p>App has basic access control facilities.</p>
 
-<p>Users that aren't allowed to log in get <code>User.is_active</code> flag set to False.</p>
+<p>You can specify who is allowed to log in to your site and who upon login gets
+staff and/or superuser statuses. This is configured through Django settings.</p>
 
-<p>See <code>utils.update_user_permissions()</code> definition and list of settings below.</p>
+<p>Currently access control cannot be turned off.
+You <strong>have</strong> to explicitly specify at least who is allowed to log in to your site.
+(Yes, this means you can't grant access to everyone yet, unless you hack the app.)</p>
+
+<p>Users that aren't allowed to log in get <code>User.is_active</code> flag set to False.
+See <code>utils.update_user_permissions()</code> definition if you're interested in other specifics,
+and see available settings below.</p>
 
 <h2>
 <a name="making-authenticated-odesk-api-calls" class="anchor" href="#making-authenticated-odesk-api-calls"><span class="octicon octicon-link"></span></a>Making authenticated oDesk API calls</h2>
@@ -111,9 +118,11 @@ under <code>request.session[O_ACCESS_TOKEN]</code>.</p></li>
 <a name="checking-oauth-access-token" class="anchor" href="#checking-oauth-access-token"><span class="octicon octicon-link"></span></a>Checking OAuth access token</h2>
 
 <p>Sometimes there's a need to make sure that current user's authentication
-is still valid. You can use <code>utils.check_login()</code> in Python,
-or make an AJAX request to named URL <code>'odesk_oauth_check_login'</code>
-from client side (see <code>views.oauth_check_login</code>).</p>
+is still valid—that they, for example, didn't revoke access to their account.</p>
+
+<p>For that you can use <code>utils.check_login()</code> in Python, or make an AJAX request
+to named URL <code>'odesk_oauth_check_login'</code> from client side
+(see <code>views.oauth_check_login</code>).</p>
 
 <h2>
 <a name="available-django-settings" class="anchor" href="#available-django-settings"><span class="octicon octicon-link"></span></a>Available Django settings</h2>
@@ -135,7 +144,7 @@ from client side (see <code>views.oauth_check_login</code>).</p>
   oDesk emails of users who are marked as <code>is_superuser</code> upon login.</p>
 
 <p>ODESK_AUTH_ALLOWED_TEAMS = ()<br>
-  IDs of oDesk teams, members of which are allowed to access FIVS backend.</p>
+  IDs of oDesk teams, members of which are allowed to log in via oDesk.</p>
 
 <p>ODESK_AUTH_ADMIN_TEAMS = ()<br>
   IDs of oDesk teams, members of which are marked as <code>is_staff</code> upon login.</p>
