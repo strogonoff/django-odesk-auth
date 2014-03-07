@@ -121,7 +121,7 @@ ODESK_AUTH_SUPERUSERS = ()
   oDesk emails of users who are marked as ``is_superuser`` upon login.
 
 ODESK_AUTH_ALLOWED_TEAMS = ()
-  IDs of oDesk teams, members of which are allowed to access FIVS backend.
+  IDs of oDesk teams, members of which are allowed to log in via oDesk.
 
 ODESK_AUTH_ADMIN_TEAMS = ()
   IDs of oDesk teams, members of which are marked as ``is_staff`` upon login.
