@@ -1,5 +1,7 @@
-Simple oDesk login for your Django-based project
-================================================
+django-odesk-auth
+=================
+
+Simple oDesk login for your Django-based project.
 
 
 Creating oDesk OAuth API key
