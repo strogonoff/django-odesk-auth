@@ -3,6 +3,9 @@ django-odesk-auth
 
 Simple oDesk login for your Django-based project.
 
+At current version, it requires Django 1.6
+and has inflexible and impossible to disable access control.
+
 
 Creating oDesk OAuth API key
 ----------------------------
