@@ -6,6 +6,10 @@ Simple oDesk login for your Django-based project.
 At current version, it requires Django 1.6
 and has inflexible and impossible to disable access control.
 
+Note: oDesk rebranded as Upwork. They promised to continue supporting oDesk APIs until May 19.
+A backwards-compatible release to this library will be made, after which it will talk directly to upwork.com.
+After that, support will be continued only for the new ``django-upwork-auth``, which is in the works. (See #4.)
+
 
 Creating oDesk OAuth API key
 ----------------------------
