@@ -16,7 +16,7 @@ setup(
     license='BSD License',
     description='A simple Django app for basic “Log in via oDesk” functionality.',
     long_description=README,
-    author='oDesk',
+    author='Upwork',
     author_email='python@odesk.com',
     maintainer='Anton Strogonoff',
     maintainer_email='anton@strogonoff.name',
