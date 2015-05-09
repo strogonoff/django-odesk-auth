@@ -2,9 +2,9 @@
 
 import logging
 import urllib2
-from odesk import Client
+from upwork import Client
 
-from odesk import exceptions as odesk_exceptions
+from upwork import exceptions as odesk_exceptions
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 

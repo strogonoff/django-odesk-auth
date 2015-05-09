@@ -3,7 +3,7 @@
 import mock
 import urllib2
 
-import odesk
+import upwork as odesk
 
 from django.test import TestCase
 

@@ -1,7 +1,7 @@
 #coding: utf-8
 
 import logging
-from odesk import exceptions as odesk_exceptions
+from upwork import exceptions as odesk_exceptions
 
 from django.contrib.auth.models import User
 from django.conf import settings
