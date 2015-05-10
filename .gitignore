@@ -1,4 +1,5 @@
 *.py[cod]
+example_project/.vagrant
 
 # C extensions
 *.so
