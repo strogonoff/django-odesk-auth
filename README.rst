@@ -1,14 +1,18 @@
 django-odesk-auth
 =================
 
-Simple oDesk login for your Django-based project.
+Simple oDesk (now Upwork) login for your Django-based project.
 
-At current version, it requires Django 1.6
-and has inflexible and impossible to disable access control.
+At current version it has inflexible and impossible to disable access control.
+It suits my own needs so far but I plan to improve on this, given demand.
 
-**Note: oDesk rebranded as Upwork.** They promised to continue supporting oDesk APIs until May 19.
-A backwards-compatible release to this library will be made, after which it will talk directly to upwork.com.
-After that, support will be continued only for the new ``django-upwork-auth``, which is in the works. (See #4.)
+Tested with Django 1.6.
+
+**Note: oDesk rebranded as Upwork.**
+Version 0.2.0 of this library depends on ``python-upwork`` instead of ``python-odesk``,
+and therefore works with new API endpoints.
+Further support and development, if any, will only be continued for new
+``django-upwork-auth``, which is in the works. (See issue #4.)
 
 
 Creating oDesk OAuth API key
@@ -25,7 +29,7 @@ Go to https://www.odesk.com/services/api/apply.
 Quick start
 -----------
 
-Provided you have installed ``django-odesk-auth`` and ``python-odesk==0.5``.
+Provided you have installed ``django-odesk-auth`` and ``python-upwork==1.0``.
 
 1. Add ``django_odesk_auth`` to INSTALLED_APPS.
    Make sure you have ``django.contrib.sites`` app in INSTALLED_APPS as well.
@@ -51,14 +55,23 @@ that is not under version control.
 
 
 Example project
---------------
+---------------
 
-Install ``django==1.6`` and ``python-odesk==0.5`` (better do this
-in virtual Python environment created specifically for example project).
+Requirements: Vagrant, Ansible, and free 8000 port.
 
-Fill in some critical settings in ``example_project/settings.py`` (see comments),
-then run ``./manage.py syncdb``, then you can run development server and
-open ``localhost:8000``.
+First, fill in some critical settings in ``example_project/settings.py``
+(see comments in the file).
+
+From example_project directory, bring up a VM using provided Vagrantfile
+and run Django development server on it:
+
+    $ vagrant up
+    $ vagrant ssh
+    vm$ cd /vagrant/example_project/
+    vm$ ./manage.py runserver 0.0.0.0:8000
+
+On your host machine, navigate to 127.0.0.1:8000 and you should be able
+to test Upwork login functionality.
 
 
 Access control
@@ -94,10 +107,10 @@ Here's a quick example::
 Some notes:
 
 * How you make API calls is up to you. Internally django-odesk-auth
-  uses python-odesk library, and so does this example.
+  uses python-upwork library, and so does this example.
 
-* ``utils.get_client()`` function returns an instance of ``odesk.Client``.
-  Handy if you're using python-odesk library to make API calls.
+* ``utils.get_client()`` function returns an instance of ``upwork.Client``.
+  Handy if you're using python-upwork library to make API calls.
 
 * OAuth access token, obtained during authentication, is stored
   under ``request.session[O_ACCESS_TOKEN]``.
