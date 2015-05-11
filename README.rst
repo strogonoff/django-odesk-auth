@@ -63,7 +63,7 @@ First, fill in some critical settings in ``example_project/settings.py``
 (see comments in the file).
 
 From example_project directory, bring up a VM using provided Vagrantfile
-and run Django development server on it:
+and run Django development server on it::
 
     $ vagrant up
     $ vagrant ssh
