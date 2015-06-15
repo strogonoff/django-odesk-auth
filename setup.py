@@ -10,14 +10,14 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-odesk-auth',
-    version='0.1.0',
+    version='0.2-pre2',
     packages=['django_odesk_auth'],
     include_package_data=True,
     license='BSD License',
-    description='A simple Django app for basic “Log in via oDesk” functionality.',
+    description='A simple Django app for basic “Log in via Upwork” functionality.',
     long_description=README,
     author='Upwork',
-    author_email='python@odesk.com',
+    author_email='python@upwork.com',
     maintainer='Anton Strogonoff',
     maintainer_email='anton@strogonoff.name',
     download_url='http://github.com/strogonoff/django-odesk-auth',
